@@ -112,11 +112,13 @@ class NgScanner {
     final offset = _scanner.position;
     if (_scanner.scan(_findBeforeElementDecoratorValue)) {
       _state = _NgScannerState.scanElementDecoratorValue;
-      return new NgToken.beforeElementDecoratorValue(offset);
+      return new NgToken.beforeElementDecoratorValue(
+          offset, _scanner.substring(offset));
     } else if (_recoverErrors &&
         _scanner.scan(_findBeforeElementDecoratorValueNoQuote)) {
       _state = _NgScannerState.scanBeforeElementDecorator;
-      return new NgToken.syntheticBeforeElementDecoratorValue(offset);
+      return new NgToken.syntheticBeforeElementDecoratorValue(
+          offset, _scanner.substring(offset));
     } else if (_scanner.peekChar() == _charElementEnd ||
         _scanner.peekChar() == $slash) {
       return scanElementEnd(wasOpenTag: true);

@@ -26,8 +26,9 @@ class NgToken {
     );
   }
 
-  factory NgToken.beforeElementDecoratorValue(int offset) {
-    return new NgToken._(NgTokenType.beforeElementDecoratorValue, offset);
+  factory NgToken.beforeElementDecoratorValue(int offset, String string) {
+    return new _LexemeNgToken(
+        offset, string, NgTokenType.beforeElementDecoratorValue);
   }
 
   factory NgToken.closeElementEnd(int offset) {
@@ -90,9 +91,10 @@ class NgToken {
     return new NgToken._(NgTokenType.openElementStart, offset);
   }
 
-  factory NgToken.syntheticBeforeElementDecoratorValue(int offset) {
-    return new NgToken._(
-        NgTokenType.syntheticBeforeElementDecoratorValue, offset);
+  factory NgToken.syntheticBeforeElementDecoratorValue(
+      int offset, String string) {
+    return new _LexemeNgToken(
+        offset, string, NgTokenType.syntheticBeforeElementDecoratorValue);
   }
 
   factory NgToken.syntheticCloseElementEnd(int offset) {

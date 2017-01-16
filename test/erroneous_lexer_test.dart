@@ -98,7 +98,7 @@ void main() {
       new NgToken.elementIdentifier(1, "div"),
       new NgToken.beforeElementDecorator(4, " "),
       new NgToken.elementDecorator(5, "someAttr"),
-      new NgToken.syntheticBeforeElementDecoratorValue(13),
+      new NgToken.syntheticBeforeElementDecoratorValue(13, " ="),
       new NgToken.syntheticOpenElementEnd(15),
     ]);
   });
@@ -109,7 +109,7 @@ void main() {
       new NgToken.elementIdentifier(1, "div"),
       new NgToken.beforeElementDecorator(4, " "),
       new NgToken.elementDecorator(5, "someAttr"),
-      new NgToken.syntheticBeforeElementDecoratorValue(13),
+      new NgToken.syntheticBeforeElementDecoratorValue(13, " ="),
       new NgToken.beforeElementDecorator(15, " "),
       new NgToken.syntheticElementDecorator(16, ""),
       new NgToken.syntheticOpenElementEnd(16),
@@ -122,7 +122,7 @@ void main() {
       new NgToken.elementIdentifier(1, "div"),
       new NgToken.beforeElementDecorator(4, " "),
       new NgToken.elementDecorator(5, "someAttr"),
-      new NgToken.syntheticBeforeElementDecoratorValue(13),
+      new NgToken.syntheticBeforeElementDecoratorValue(13, " ="),
       new NgToken.syntheticOpenElementEnd(15),
       new NgToken.openElementStart(15),
       new NgToken.elementIdentifier(16, "div"),
@@ -139,7 +139,7 @@ void main() {
       new NgToken.elementIdentifier(1, "div"),
       new NgToken.beforeElementDecorator(4, " "),
       new NgToken.elementDecorator(5, "someAttr"),
-      new NgToken.syntheticBeforeElementDecoratorValue(13),
+      new NgToken.syntheticBeforeElementDecoratorValue(13, " ="),
       new NgToken.beforeElementDecorator(15, " "),
       new NgToken.syntheticElementDecorator(16, ""),
       new NgToken.syntheticOpenElementEnd(16),
@@ -158,7 +158,7 @@ void main() {
       new NgToken.elementIdentifier(1, "div"),
       new NgToken.beforeElementDecorator(4, " "),
       new NgToken.elementDecorator(5, "someAttr"),
-      new NgToken.beforeElementDecoratorValue(13),
+      new NgToken.beforeElementDecoratorValue(13, ' = "'),
       new NgToken.elementDecoratorValue(17, "blah"),
       new NgToken.afterElementDecoratorValue(21),
       new NgToken.syntheticOpenElementEnd(22)
@@ -171,7 +171,7 @@ void main() {
       new NgToken.elementIdentifier(1, "div"),
       new NgToken.beforeElementDecorator(4, " "),
       new NgToken.elementDecorator(5, "someAttr"),
-      new NgToken.beforeElementDecoratorValue(13),
+      new NgToken.beforeElementDecoratorValue(13, ' = "'),
       new NgToken.elementDecoratorValue(17, "blah"),
       new NgToken.afterElementDecoratorValue(21),
       new NgToken.syntheticOpenElementEnd(22),
@@ -182,5 +182,19 @@ void main() {
       new NgToken.elementIdentifier(29, "div"),
       new NgToken.closeElementEnd(32)
     ]);
+  });
+
+  test('should tokenize a HTML template with decorator values and back', () {
+    const html = r'''
+      <div<div></div>
+      <div
+        <div <div></div>
+          <div someAttr<div></div>
+          <div someAttr =<div></div>
+          <div someAttr = <div></div>
+        </div>
+      <div someAttr = "blah"<div></div>'
+    ''';
+    expect(untokenize(tokenize(html)), html);
   });
 }

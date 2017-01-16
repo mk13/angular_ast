@@ -102,7 +102,7 @@ class NgTokenType {
   /// is encountered immedietely after the '=' sign
   static const syntheticBeforeElementDecoratorValue = const NgTokenType._(
     'syntheticBeforeElementDecoratorValue',
-    lexeme: '="',
+    lexeme: '=',
   );
 
   /// Represents the name of a synthetic element decorator.
@@ -117,13 +117,13 @@ class NgTokenType {
   /// Represents synthetic ending closing an element declaration.
   static const syntheticCloseElementEnd = const NgTokenType._(
     'syntheticCloseElementEnd',
-    lexeme: '>',
+    lexeme: '',
   );
 
   /// Represents synthetic ending opening an element declaration.
   static const syntheticOpenElementEnd = const NgTokenType._(
     'syntheticOpenElementEnd',
-    lexeme: '>',
+    lexeme: '',
   );
 
   /// Represents a text token.
