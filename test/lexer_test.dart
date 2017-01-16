@@ -7,7 +7,9 @@ import 'package:test/test.dart';
 
 void main() {
   // Returns the html parsed as a series of tokens.
-  Iterable<NgToken> tokenize(String html) => const NgLexer().tokenize(html);
+  //Iterable<NgToken> tokenize(String html) => const NgLexer().tokenize(html);
+  Iterable<NgToken> tokenize(String html) =>
+      const NgLexer().tokenize(html, recoverErrors: true);
 
   // Returns the html parsed as a series of tokens, then back to html.
   String untokenize(Iterable<NgToken> tokens) => tokens

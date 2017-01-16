@@ -25,9 +25,7 @@ void main() {
   test('should parse a DOM element', () {
     expect(
       parse('<div></div>'),
-      [
-        new ElementAst('div'),
-      ],
+      [new ElementAst('div')],
     );
   });
 

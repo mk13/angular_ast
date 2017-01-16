@@ -98,6 +98,34 @@ class NgTokenType {
     lexeme: '<',
   );
 
+  /// Represents `\s*=`. This token is only raised if some invalid character
+  /// is encountered immedietely after the '=' sign
+  static const syntheticBeforeElementDecoratorValue = const NgTokenType._(
+    'syntheticBeforeElementDecoratorValue',
+    lexeme: '="',
+  );
+
+  /// Represents the name of a synthetic element decorator.
+  static const syntheticElementDecorator = const NgTokenType._('syntheticElementDecorator');
+
+  /// Represents the value of an element decorator.
+  static const synthethicElementDecoratorValue = const NgTokenType._(
+    'synthethicElementDecoratorValue',
+  );
+
+  /// Represents synthetic ending closing an element declaration.
+  static const syntheticCloseElementEnd = const NgTokenType._(
+    'syntheticCloseElementEnd',
+    lexeme: '>',
+  );
+
+  /// Represents synthetic ending opening an element declaration.
+  static const syntheticOpenElementEnd = const NgTokenType._(
+    'syntheticOpenElementEnd',
+    lexeme: '>',
+  );
+
+
   /// Represents a text token.
   static const text = const NgTokenType._('text');
 

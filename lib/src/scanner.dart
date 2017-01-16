@@ -19,22 +19,28 @@ class NgScanner {
   static const _findBeforeComment = '<!--';
   static const _findBeforeInterpolation = '{{';
   static final _findBeforeElementDecoratorValue = new RegExp(r'\s*=\s*"');
-  static final _findElementDecorator = new RegExp(r'[^\s=>]+', multiLine: true);
+  static final _findBeforeElementDecoratorValueNoQuote = new RegExp(r'\s*=');
+  static final _findElementDecorator = new RegExp(r'[^\s=>\<]+', multiLine: true);
   static final _findElementDecoratorValue = new RegExp(r'[^"]*');
   static const _findElementEndVoid = '/>';
-  static final _findElementIdentifier = new RegExp(r'[^\s/>]*');
+  static final _findElementIdentifier = new RegExp(r'[^\s/>/<]*');
   static final _findInterpolationValue = new RegExp(r'[^}}]*');
   static final _findWhitespace = new RegExp(r'\s+', multiLine: true);
 
+  static bool _isIllegalTagTerminator(int c) =>
+      (c == null || c == _charElementStart);
+
+  final bool _recoverErrors;
   final StringScanner _scanner;
 
   _NgScannerState _state = _NgScannerState.scanStart;
 
-  factory NgScanner(String html, {sourceUrl}) {
-    return new NgScanner._(new StringScanner(html, sourceUrl: sourceUrl));
+  factory NgScanner(String html, {sourceUrl, recoverErrors}) {
+    return new NgScanner._(
+        new StringScanner(html, sourceUrl: sourceUrl), recoverErrors);
   }
 
-  NgScanner._(this._scanner);
+  NgScanner._(this._scanner, this._recoverErrors);
 
   /// Scans and returns the next token, or `null` if there is none more.
   NgToken scan() {
@@ -106,11 +112,18 @@ class NgScanner {
     if (_scanner.scan(_findBeforeElementDecoratorValue)) {
       _state = _NgScannerState.scanElementDecoratorValue;
       return new NgToken.beforeElementDecoratorValue(offset);
+    } else if (_recoverErrors &&
+        _scanner.scan(_findBeforeElementDecoratorValueNoQuote)) {
+      _state = _NgScannerState.scanBeforeElementDecorator;
+      return new NgToken.syntheticBeforeElementDecoratorValue(offset);
     } else if (_scanner.peekChar() == _charElementEnd ||
         _scanner.peekChar() == $slash) {
       return scanElementEnd(wasOpenTag: true);
     } else if (_scanner.matches(_findWhitespace)) {
       return scanBeforeElementDecorator();
+    } else if (_recoverErrors &&
+        _isIllegalTagTerminator(_scanner.peekChar())) {
+      return scanElementEnd(wasOpenTag: true);
     } else {
       throw _unexpected();
     }
@@ -158,6 +171,10 @@ class NgScanner {
         _scanner.substring(offset),
       );
     }
+    if (_recoverErrors &&
+        _isIllegalTagTerminator(_scanner.peekChar())) {
+      return scanElementEnd(wasOpenTag: true);
+    }
     throw _unexpected();
   }
 
@@ -196,7 +213,11 @@ class NgScanner {
     if (_scanner.scan(_findElementDecorator)) {
       _state = _NgScannerState.scanAfterElementDecorator;
       return new NgToken.elementDecorator(offset, _scanner.substring(offset));
-    }
+    } else if (_recoverErrors &&
+        _isIllegalTagTerminator(_scanner.peekChar())) {
+      _state = _NgScannerState.scanAfterElementDecorator;
+      return new NgToken.syntheticElementDecorator(offset, "");
+  }
     throw _unexpected();
   }
 
@@ -243,6 +264,12 @@ class NgScanner {
       return wasOpenTag
           ? new NgToken.openElementEnd(offset)
           : new NgToken.closeElementEnd(offset);
+    } else if (_recoverErrors &&
+        _isIllegalTagTerminator(_scanner.peekChar())) {
+      _state = _NgScannerState.scanStart;
+      return wasOpenTag
+          ? new NgToken.syntheticOpenElementEnd(offset)
+          : new NgToken.syntheticCloseElementEnd(offset);
     } else {
       throw _unexpected();
     }
