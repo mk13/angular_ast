@@ -91,7 +91,8 @@ class NgToken {
   }
 
   factory NgToken.syntheticBeforeElementDecoratorValue(int offset) {
-    return new NgToken._(NgTokenType.syntheticBeforeElementDecoratorValue, offset);
+    return new NgToken._(
+        NgTokenType.syntheticBeforeElementDecoratorValue, offset);
   }
 
   factory NgToken.syntheticCloseElementEnd(int offset) {
@@ -99,7 +100,8 @@ class NgToken {
   }
 
   factory NgToken.syntheticElementDecorator(int offset, String string) {
-    return new _LexemeNgToken(offset, string, NgTokenType.syntheticElementDecorator);
+    return new _LexemeNgToken(
+        offset, string, NgTokenType.syntheticElementDecorator);
   }
 
   factory NgToken.synthethicElementDecoratorValue(int offset, String string) {

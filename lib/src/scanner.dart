@@ -20,7 +20,8 @@ class NgScanner {
   static const _findBeforeInterpolation = '{{';
   static final _findBeforeElementDecoratorValue = new RegExp(r'\s*=\s*"');
   static final _findBeforeElementDecoratorValueNoQuote = new RegExp(r'\s*=');
-  static final _findElementDecorator = new RegExp(r'[^\s=>\<]+', multiLine: true);
+  static final _findElementDecorator =
+      new RegExp(r'[^\s=>\<]+', multiLine: true);
   static final _findElementDecoratorValue = new RegExp(r'[^"]*');
   static const _findElementEndVoid = '/>';
   static final _findElementIdentifier = new RegExp(r'[^\s/>/<]*');
@@ -121,8 +122,7 @@ class NgScanner {
       return scanElementEnd(wasOpenTag: true);
     } else if (_scanner.matches(_findWhitespace)) {
       return scanBeforeElementDecorator();
-    } else if (_recoverErrors &&
-        _isIllegalTagTerminator(_scanner.peekChar())) {
+    } else if (_recoverErrors && _isIllegalTagTerminator(_scanner.peekChar())) {
       return scanElementEnd(wasOpenTag: true);
     } else {
       throw _unexpected();
@@ -171,8 +171,7 @@ class NgScanner {
         _scanner.substring(offset),
       );
     }
-    if (_recoverErrors &&
-        _isIllegalTagTerminator(_scanner.peekChar())) {
+    if (_recoverErrors && _isIllegalTagTerminator(_scanner.peekChar())) {
       return scanElementEnd(wasOpenTag: true);
     }
     throw _unexpected();
@@ -213,11 +212,10 @@ class NgScanner {
     if (_scanner.scan(_findElementDecorator)) {
       _state = _NgScannerState.scanAfterElementDecorator;
       return new NgToken.elementDecorator(offset, _scanner.substring(offset));
-    } else if (_recoverErrors &&
-        _isIllegalTagTerminator(_scanner.peekChar())) {
+    } else if (_recoverErrors && _isIllegalTagTerminator(_scanner.peekChar())) {
       _state = _NgScannerState.scanAfterElementDecorator;
       return new NgToken.syntheticElementDecorator(offset, "");
-  }
+    }
     throw _unexpected();
   }
 
@@ -264,8 +262,7 @@ class NgScanner {
       return wasOpenTag
           ? new NgToken.openElementEnd(offset)
           : new NgToken.closeElementEnd(offset);
-    } else if (_recoverErrors &&
-        _isIllegalTagTerminator(_scanner.peekChar())) {
+    } else if (_recoverErrors && _isIllegalTagTerminator(_scanner.peekChar())) {
       _state = _NgScannerState.scanStart;
       return wasOpenTag
           ? new NgToken.syntheticOpenElementEnd(offset)

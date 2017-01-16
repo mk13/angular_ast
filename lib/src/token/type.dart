@@ -106,7 +106,8 @@ class NgTokenType {
   );
 
   /// Represents the name of a synthetic element decorator.
-  static const syntheticElementDecorator = const NgTokenType._('syntheticElementDecorator');
+  static const syntheticElementDecorator =
+      const NgTokenType._('syntheticElementDecorator');
 
   /// Represents the value of an element decorator.
   static const synthethicElementDecoratorValue = const NgTokenType._(
@@ -124,7 +125,6 @@ class NgTokenType {
     'syntheticOpenElementEnd',
     lexeme: '>',
   );
-
 
   /// Represents a text token.
   static const text = const NgTokenType._('text');

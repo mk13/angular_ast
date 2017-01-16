@@ -16,12 +16,11 @@ void main() {
       .toString();
 
   test('should tokenize: EOF in elementIdentifier', () {
-    expect(tokenize('<div'),
-        [
-          new NgToken.openElementStart(0),
-          new NgToken.elementIdentifier(1, "div"),
-          new NgToken.syntheticOpenElementEnd(4)
-        ]);
+    expect(tokenize('<div'), [
+      new NgToken.openElementStart(0),
+      new NgToken.elementIdentifier(1, "div"),
+      new NgToken.syntheticOpenElementEnd(4)
+    ]);
   });
 
   test('should tokenize: new tag in elementIdentifier', () {
@@ -42,157 +41,146 @@ void main() {
   });
 
   test('should tokenize: EOF in beforeElementDecorator', () {
-    expect(tokenize('<div '),
-        [
-          new NgToken.openElementStart(0),
-          new NgToken.elementIdentifier(1, "div"),
-          new NgToken.beforeElementDecorator(4, " "),
-          new NgToken.syntheticElementDecorator(5, ""),
-          new NgToken.syntheticOpenElementEnd(5)
-        ]);
+    expect(tokenize('<div '), [
+      new NgToken.openElementStart(0),
+      new NgToken.elementIdentifier(1, "div"),
+      new NgToken.beforeElementDecorator(4, " "),
+      new NgToken.syntheticElementDecorator(5, ""),
+      new NgToken.syntheticOpenElementEnd(5)
+    ]);
   });
 
   test('should tokenize: new tag in beforeElementDecorator', () {
-    expect(tokenize('<div <div></div>'),
-        [
-          new NgToken.openElementStart(0),
-          new NgToken.elementIdentifier(1, "div"),
-          new NgToken.beforeElementDecorator(4, " "),
-          new NgToken.syntheticElementDecorator(5, ""),
-          new NgToken.syntheticOpenElementEnd(5),
-          new NgToken.openElementStart(5),
-          new NgToken.elementIdentifier(6, "div"),
-          new NgToken.openElementEnd(9),
-          new NgToken.closeElementStart(10),
-          new NgToken.elementIdentifier(12, "div"),
-          new NgToken.closeElementEnd(15)
-        ]);
+    expect(tokenize('<div <div></div>'), [
+      new NgToken.openElementStart(0),
+      new NgToken.elementIdentifier(1, "div"),
+      new NgToken.beforeElementDecorator(4, " "),
+      new NgToken.syntheticElementDecorator(5, ""),
+      new NgToken.syntheticOpenElementEnd(5),
+      new NgToken.openElementStart(5),
+      new NgToken.elementIdentifier(6, "div"),
+      new NgToken.openElementEnd(9),
+      new NgToken.closeElementStart(10),
+      new NgToken.elementIdentifier(12, "div"),
+      new NgToken.closeElementEnd(15)
+    ]);
   });
 
   test('should tokenize: EOF in elementDecorator', () {
-    expect(tokenize('<div someAttr'),
-        [
-          new NgToken.openElementStart(0),
-          new NgToken.elementIdentifier(1, "div"),
-          new NgToken.beforeElementDecorator(4, " "),
-          new NgToken.elementDecorator(5, "someAttr"),
-          new NgToken.syntheticOpenElementEnd(13),
-        ]);
+    expect(tokenize('<div someAttr'), [
+      new NgToken.openElementStart(0),
+      new NgToken.elementIdentifier(1, "div"),
+      new NgToken.beforeElementDecorator(4, " "),
+      new NgToken.elementDecorator(5, "someAttr"),
+      new NgToken.syntheticOpenElementEnd(13),
+    ]);
   });
 
   test('should tokenize: new tag in elementDecorator', () {
-    expect(tokenize('<div someAttr<div></div>'),
-        [
-          new NgToken.openElementStart(0),
-          new NgToken.elementIdentifier(1, "div"),
-          new NgToken.beforeElementDecorator(4, " "),
-          new NgToken.elementDecorator(5, "someAttr"),
-          new NgToken.syntheticOpenElementEnd(13),
-          new NgToken.openElementStart(13),
-          new NgToken.elementIdentifier(14, "div"),
-          new NgToken.openElementEnd(17),
-          new NgToken.closeElementStart(18),
-          new NgToken.elementIdentifier(20, "div"),
-          new NgToken.closeElementEnd(23)
-        ]);
+    expect(tokenize('<div someAttr<div></div>'), [
+      new NgToken.openElementStart(0),
+      new NgToken.elementIdentifier(1, "div"),
+      new NgToken.beforeElementDecorator(4, " "),
+      new NgToken.elementDecorator(5, "someAttr"),
+      new NgToken.syntheticOpenElementEnd(13),
+      new NgToken.openElementStart(13),
+      new NgToken.elementIdentifier(14, "div"),
+      new NgToken.openElementEnd(17),
+      new NgToken.closeElementStart(18),
+      new NgToken.elementIdentifier(20, "div"),
+      new NgToken.closeElementEnd(23)
+    ]);
   });
 
   test('should tokenize: EOF in beforeElementDecoratorValue 1', () {
-    expect(tokenize('<div someAttr ='),
-        [
-          new NgToken.openElementStart(0),
-          new NgToken.elementIdentifier(1, "div"),
-          new NgToken.beforeElementDecorator(4, " "),
-          new NgToken.elementDecorator(5, "someAttr"),
-          new NgToken.syntheticBeforeElementDecoratorValue(13),
-          new NgToken.syntheticOpenElementEnd(15),
-        ]);
+    expect(tokenize('<div someAttr ='), [
+      new NgToken.openElementStart(0),
+      new NgToken.elementIdentifier(1, "div"),
+      new NgToken.beforeElementDecorator(4, " "),
+      new NgToken.elementDecorator(5, "someAttr"),
+      new NgToken.syntheticBeforeElementDecoratorValue(13),
+      new NgToken.syntheticOpenElementEnd(15),
+    ]);
   });
 
   test('should tokenize: EOF in beforeElementDecoratorValue 2', () {
-    expect(tokenize('<div someAttr = '),
-        [
-          new NgToken.openElementStart(0),
-          new NgToken.elementIdentifier(1, "div"),
-          new NgToken.beforeElementDecorator(4, " "),
-          new NgToken.elementDecorator(5, "someAttr"),
-          new NgToken.syntheticBeforeElementDecoratorValue(13),
-          new NgToken.beforeElementDecorator(15, " "),
-          new NgToken.syntheticElementDecorator(16, ""),
-          new NgToken.syntheticOpenElementEnd(16),
-        ]);
+    expect(tokenize('<div someAttr = '), [
+      new NgToken.openElementStart(0),
+      new NgToken.elementIdentifier(1, "div"),
+      new NgToken.beforeElementDecorator(4, " "),
+      new NgToken.elementDecorator(5, "someAttr"),
+      new NgToken.syntheticBeforeElementDecoratorValue(13),
+      new NgToken.beforeElementDecorator(15, " "),
+      new NgToken.syntheticElementDecorator(16, ""),
+      new NgToken.syntheticOpenElementEnd(16),
+    ]);
   });
 
   test('should tokenize: new tag in beforeElementDecoratorValue 1', () {
-    expect(tokenize('<div someAttr =<div></div>'),
-        [
-          new NgToken.openElementStart(0),
-          new NgToken.elementIdentifier(1, "div"),
-          new NgToken.beforeElementDecorator(4, " "),
-          new NgToken.elementDecorator(5, "someAttr"),
-          new NgToken.syntheticBeforeElementDecoratorValue(13),
-          new NgToken.syntheticOpenElementEnd(15),
-          new NgToken.openElementStart(15),
-          new NgToken.elementIdentifier(16, "div"),
-          new NgToken.openElementEnd(19),
-          new NgToken.closeElementStart(20),
-          new NgToken.elementIdentifier(22, "div"),
-          new NgToken.closeElementEnd(25),
-        ]);
+    expect(tokenize('<div someAttr =<div></div>'), [
+      new NgToken.openElementStart(0),
+      new NgToken.elementIdentifier(1, "div"),
+      new NgToken.beforeElementDecorator(4, " "),
+      new NgToken.elementDecorator(5, "someAttr"),
+      new NgToken.syntheticBeforeElementDecoratorValue(13),
+      new NgToken.syntheticOpenElementEnd(15),
+      new NgToken.openElementStart(15),
+      new NgToken.elementIdentifier(16, "div"),
+      new NgToken.openElementEnd(19),
+      new NgToken.closeElementStart(20),
+      new NgToken.elementIdentifier(22, "div"),
+      new NgToken.closeElementEnd(25),
+    ]);
   });
 
   test('should tokenize: new tag in beforeElementDecoratorValue 2', () {
-    expect(tokenize('<div someAttr = <div></div>'),
-        [
-          new NgToken.openElementStart(0),
-          new NgToken.elementIdentifier(1, "div"),
-          new NgToken.beforeElementDecorator(4, " "),
-          new NgToken.elementDecorator(5, "someAttr"),
-          new NgToken.syntheticBeforeElementDecoratorValue(13),
-          new NgToken.beforeElementDecorator(15, " "),
-          new NgToken.syntheticElementDecorator(16, ""),
-          new NgToken.syntheticOpenElementEnd(16),
-          new NgToken.openElementStart(16),
-          new NgToken.elementIdentifier(17, "div"),
-          new NgToken.openElementEnd(20),
-          new NgToken.closeElementStart(21),
-          new NgToken.elementIdentifier(23, "div"),
-          new NgToken.closeElementEnd(26),
-        ]);
+    expect(tokenize('<div someAttr = <div></div>'), [
+      new NgToken.openElementStart(0),
+      new NgToken.elementIdentifier(1, "div"),
+      new NgToken.beforeElementDecorator(4, " "),
+      new NgToken.elementDecorator(5, "someAttr"),
+      new NgToken.syntheticBeforeElementDecoratorValue(13),
+      new NgToken.beforeElementDecorator(15, " "),
+      new NgToken.syntheticElementDecorator(16, ""),
+      new NgToken.syntheticOpenElementEnd(16),
+      new NgToken.openElementStart(16),
+      new NgToken.elementIdentifier(17, "div"),
+      new NgToken.openElementEnd(20),
+      new NgToken.closeElementStart(21),
+      new NgToken.elementIdentifier(23, "div"),
+      new NgToken.closeElementEnd(26),
+    ]);
   });
 
   test('should tokenize: EOF in afterElementDecorator', () {
-    expect(tokenize('<div someAttr = "blah"'),
-        [
-          new NgToken.openElementStart(0),
-          new NgToken.elementIdentifier(1, "div"),
-          new NgToken.beforeElementDecorator(4, " "),
-          new NgToken.elementDecorator(5, "someAttr"),
-          new NgToken.beforeElementDecoratorValue(13),
-          new NgToken.elementDecoratorValue(17, "blah"),
-          new NgToken.afterElementDecoratorValue(21),
-          new NgToken.syntheticOpenElementEnd(22)
-        ]);
+    expect(tokenize('<div someAttr = "blah"'), [
+      new NgToken.openElementStart(0),
+      new NgToken.elementIdentifier(1, "div"),
+      new NgToken.beforeElementDecorator(4, " "),
+      new NgToken.elementDecorator(5, "someAttr"),
+      new NgToken.beforeElementDecoratorValue(13),
+      new NgToken.elementDecoratorValue(17, "blah"),
+      new NgToken.afterElementDecoratorValue(21),
+      new NgToken.syntheticOpenElementEnd(22)
+    ]);
   });
 
   test('should tokenize: new tag in afterElementDecorator', () {
-    expect(tokenize('<div someAttr = "blah"<div></div>'),
-        [
-          new NgToken.openElementStart(0),
-          new NgToken.elementIdentifier(1, "div"),
-          new NgToken.beforeElementDecorator(4, " "),
-          new NgToken.elementDecorator(5, "someAttr"),
-          new NgToken.beforeElementDecoratorValue(13),
-          new NgToken.elementDecoratorValue(17, "blah"),
-          new NgToken.afterElementDecoratorValue(21),
-          new NgToken.syntheticOpenElementEnd(22),
-          new NgToken.openElementStart(22),
-          new NgToken.elementIdentifier(23, "div"),
-          new NgToken.openElementEnd(26),
-          new NgToken.closeElementStart(27),
-          new NgToken.elementIdentifier(29, "div"),
-          new NgToken.closeElementEnd(32)
-        ]);
+    expect(tokenize('<div someAttr = "blah"<div></div>'), [
+      new NgToken.openElementStart(0),
+      new NgToken.elementIdentifier(1, "div"),
+      new NgToken.beforeElementDecorator(4, " "),
+      new NgToken.elementDecorator(5, "someAttr"),
+      new NgToken.beforeElementDecoratorValue(13),
+      new NgToken.elementDecoratorValue(17, "blah"),
+      new NgToken.afterElementDecoratorValue(21),
+      new NgToken.syntheticOpenElementEnd(22),
+      new NgToken.openElementStart(22),
+      new NgToken.elementIdentifier(23, "div"),
+      new NgToken.openElementEnd(26),
+      new NgToken.closeElementStart(27),
+      new NgToken.elementIdentifier(29, "div"),
+      new NgToken.closeElementEnd(32)
+    ]);
   });
-
 }
