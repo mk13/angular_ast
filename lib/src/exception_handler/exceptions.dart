@@ -39,6 +39,7 @@ const List<NgParserWarningCode> angularAstWarningCodes = const [
   NgParserWarningCode.SUFFIX_BANANA,
   NgParserWarningCode.SUFFIX_EVENT,
   NgParserWarningCode.SUFFIX_PROPERTY,
+  NgParserWarningCode.TRAILING_EXPRESSION,
   NgParserWarningCode.UNCLOSED_QUOTE,
   NgParserWarningCode.UNOPENED_MUSTACHE,
   NgParserWarningCode.UNTERMINATED_COMMENT,
@@ -216,6 +217,10 @@ class NgParserWarningCode extends ErrorCode {
     'SUFFIX_PROPERTY',
     "Expected closing bracket ']'",
   );
+
+  static const NgParserWarningCode TRAILING_EXPRESSION =
+      const NgParserWarningCode(
+          'TRAILING_EXPRESSION', 'Expressions must end with an EOF');
 
   static const NgParserWarningCode UNCLOSED_QUOTE = const NgParserWarningCode(
     'UNCLOSED_QUOTE',

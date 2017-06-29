@@ -287,7 +287,7 @@ class PipeInvocationExpressionImpl extends ExpressionImpl
     ..add(pipeOptionalArgumentList);
 
   @override
-  Token get endToken => pipeOptionalArgumentList == null
+  Token get endToken => pipeOptionalArgumentList != null
       ? pipeOptionalArgumentList.endToken
       : pipe.endToken;
 

@@ -33,23 +33,33 @@ class _ThrowingListener implements AnalysisErrorListener {
 
 /// Parses a template [expression].
 Expression parseExpression(
-  String expression, {
+  String expressionString, {
   @required String sourceUrl,
+  bool detectTrailing: true,
 }) {
   final source = _resourceProvider
       .newFile(
         sourceUrl,
-        expression,
+        expressionString,
       )
       .createSource();
-  final reader = new CharSequenceReader(expression);
+  final reader = new CharSequenceReader(expressionString);
   final listener = const _ThrowingListener();
   final scanner = new Scanner(source, reader, listener);
   final parser = new _NgExpressionParser(
     source,
     listener,
   );
-  return parser.parseExpression(scanner.tokenize());
+  final expression = parser.parseExpression(scanner.tokenize());
+  if (detectTrailing && expression.endToken.next.type != TokenType.EOF) {
+    final trailingExpressionBegin = expression.endToken.next.offset;
+    listener.onError(new AnalysisError(
+        source,
+        trailingExpressionBegin,
+        expressionString.length - trailingExpressionBegin,
+        NgParserWarningCode.TRAILING_EXPRESSION));
+  }
+  return expression;
 }
 
 /// Extends the Dart language to understand the current Angular 'pipe' syntax.
