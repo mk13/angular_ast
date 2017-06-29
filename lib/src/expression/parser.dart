@@ -46,7 +46,7 @@ Expression parseExpression(
   final reader = new CharSequenceReader(expressionString);
   final listener = const _ThrowingListener();
   final scanner = new Scanner(source, reader, listener);
-  final parser = new _NgExpressionParser(
+  final parser = new NgExpressionParser(
     source,
     listener,
   );
@@ -67,8 +67,8 @@ Expression parseExpression(
 /// be treated as a pipe.
 ///
 /// Based on https://github.com/dart-lang/angular_analyzer_plugin/pull/160
-class _NgExpressionParser extends Parser {
-  _NgExpressionParser(
+class NgExpressionParser extends Parser {
+  NgExpressionParser(
     Source source,
     AnalysisErrorListener errorListener,
   )
